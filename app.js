@@ -2,10 +2,10 @@ const lineWidthText = document.querySelector("#line-width-text");
 const saveBtn = document.querySelector("#save-btn");
 const textInput = document.querySelector("#text");
 const fileInput = document.querySelector("#file");
-const modeBtn = document.querySelector("#mode-btn");
 const clearBtn = document.querySelector("#clear-btn");
 const eraserBtn = document.querySelector("#eraser-btn");
 const colorOptions = Array.from(document.querySelectorAll(".color-option"));
+const modeCheck = Array.from(document.querySelectorAll(".mode-check"));
 const color = document.querySelector("#color");
 const lineWidth = document.querySelector("#line-width");
 const canvas = document.querySelector("canvas");
@@ -19,13 +19,21 @@ ctx.lineWidth = lineWidth.value;
 ctx.lineCap = "round";
 
 let isPainting = false;
+let isAreaFilling = false;
 let isFilling = false;
 let isErasing = false;
 
 function onMove(event) {
     if (isPainting) {
         ctx.lineTo(event.offsetX, event.offsetY);
-        ctx.stroke();
+        if(isAreaFilling){
+            ctx.fill();
+            return;
+        }
+        else{
+            ctx.stroke();
+            return;
+        }
     }
     ctx.moveTo(event.offsetX, event.offsetY);
 }
@@ -41,7 +49,7 @@ function changeColor(event) {
         ctx.fillStyle = targetValue;
     }
 }
-function startPainting() {
+function startPainting(event) {
     isPainting = true;
     if(isFilling){
         ctx.fillRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
@@ -63,16 +71,6 @@ function onColorClick(event) {
     changeColor(event);
     color.value = colorValue;
 }
-function onModeClick(){
-    if(isFilling){
-        isFilling = false;
-        modeBtn.innerText = "Mode : Draw";
-    }
-    else{
-        isFilling = true;
-        modeBtn.innerText = "Mode : Fill";
-    }
-}
 function onClearClick(){
     ctx.fillStyle = "white"; 
     ctx.fillRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
@@ -83,21 +81,12 @@ function onEraserClick(){
         ctx.strokeStyle = "white";
         isErasing = true;
         isFilling = false;
-        modeBtn.innerText = "-";
         eraserBtn.innerText = "Eraser Off";
     }
     else{
         ctx.restore();
         eraserBtn.innerText = "⚪Eraser";
         isErasing = false;
-        if(!isFilling){
-            isFilling = false;
-            modeBtn.innerText = "Mode : Draw";
-        }
-        else{
-            isFilling = true;
-            modeBtn.innerText = "Mode : Fill";
-        }
     }
 }
 function onFileChange(event){
@@ -127,6 +116,21 @@ function onSaveClick(){
     a.download = "myDrawing.png";
     a.click();
 }
+function onModeCheck(event){
+    const radioId = event.target.id;
+    if(radioId === "line"){
+        isFilling=false;
+        isAreaFilling=false;
+    }
+    else if(radioId === "area"){
+        isFilling=false;
+        isAreaFilling=true;
+    }
+    else if(radioId === "full"){
+        isFilling=true;
+        isAreaFilling=false;
+    }
+}
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", canclePainting);
@@ -137,8 +141,8 @@ lineWidth.addEventListener("change", onLineWidthChange);
 color.addEventListener("change", onColorChange);
 
 colorOptions.forEach(color => color.addEventListener("click", onColorClick));
+modeCheck.forEach(mode => mode.addEventListener("click",onModeCheck));
 
-modeBtn.addEventListener("click",onModeClick);
 clearBtn.addEventListener("click",onClearClick);
 eraserBtn.addEventListener("click",onEraserClick);
 fileInput.addEventListener("change",onFileChange);

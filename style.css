@@ -77,3 +77,7 @@ label{
     border: 1px solid grey;
     border-radius: 10px;
 }
+.mode-group{
+    padding-bottom: 30px;
+    border-bottom: thick double grey;
+}

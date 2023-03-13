@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>밈 메이커</title>
+    <title>그림판</title>
 </head>
 
 <body>
@@ -21,18 +21,25 @@
         <div class="color-option" style="background-color: #e74c3c;" data-color="#e74c3c"></div>
         <div class="color-option" style="background-color: #95a5a6;" data-color="#95a5a6"></div>
         <div class="color-option" style="background-color: #d35400;" data-color="#d35400"></div>
-        <div class="color-option" style="background-color: #bdc3c7;" data-color="#bdc3c7"></div>
-        <div class="color-option" style="background-color: #2ecc71;" data-color="#2ecc71"></div>
-        <div class="color-option" style="background-color: #e67e22;" data-color="#e67e22"></div>
+        <div class="color-option" style="background-color: #ffffff;" data-color="#ffffff"></div>
+        <div class="color-option" style="background-color: #000000;" data-color="#000000"></div>
+        <div class="color-option" style="background-color: #eb1b9b;" data-color="#eb1b9b"></div>
     </div>
     <canvas></canvas>
     <div class="btns">
         <span id="line-width-text">Line Width : 5px</span>
         <input id="line-width" type="range" min="5" max="50" value="5" step="5" />
-        <button id="mode-btn">Mode : Draw</button>
-        <button id="clear-btn">❌All-Clear</button>
-        <button id="eraser-btn">⚪Eraser</button>
-        <input type="text" placeholder="Input Text" id="text" />
+        <div class="mode-group" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="mode-check" name="btnradio" id="line" autocomplete="off" checked>
+            <label class="btn btn-outline-primary" for="line">Line</label>
+            <input type="radio" class="mode-check" name="btnradio" id="area" autocomplete="off">
+            <label class="btn btn-outline-primary" for="area">Area Fill</label>
+            <input type="radio" class="mode-check" name="btnradio" id="full" autocomplete="off">
+            <label class="btn btn-outline-primary" for="full">Full Fill</label>
+        </div>
+        <button id="clear-btn">❌ All-Clear</button>
+        <button id="eraser-btn">⚪ Eraser</button>
+        <input type="text" value="Input Text !!" id="text" />
         <label for="file">
             Add Photo
             <input type="file" accept="image/*" id="file" />
