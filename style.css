@@ -33,6 +33,7 @@ body{
     border: 2px solid black;
     border-radius: 20px;
     padding: 20px 10px;
+    background-color: rgba(255, 255, 255, 0.3);
 }
 .color-options{
     display: flex;
@@ -42,6 +43,7 @@ body{
     border: 2px solid black;
     border-radius: 50px;
     padding: 20px 10px;
+    background-color: rgba(255, 255, 255, 0.3);
 }
 input#color{
     background-color: white;
