@@ -1,3 +1,7 @@
+const fontSettingBtn = document.querySelector("#font-btn");
+const fontDialog = document.querySelector("#font-dialog");
+const fontDialogSelect = document.querySelector("select");
+const fontSizeInput = document.querySelector("#font-size");
 const lineWidthText = document.querySelector("#line-width-text");
 const saveBtn = document.querySelector("#save-btn");
 const textInput = document.querySelector("#text");
@@ -6,10 +10,15 @@ const clearBtn = document.querySelector("#clear-btn");
 const eraserBtn = document.querySelector("#eraser-btn");
 const colorOptions = Array.from(document.querySelectorAll(".color-option"));
 const modeCheck = Array.from(document.querySelectorAll(".mode-check"));
+const fontMode = Array.from(document.querySelectorAll(".font-mode"));
 const color = document.querySelector("#color");
 const lineWidth = document.querySelector("#line-width");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d"); /*paint brush*/
+
+let fontFillStroke = "fill";
+let font = "sans-serif";
+let fontSize = "60px";
 
 const CANVAS_WIDTH = 900;
 const CANVAS_HEIGHT = 900;
@@ -103,9 +112,13 @@ function onDoubleClick(event){
     const text = textInput.value;
     if(text !== null){
         ctx.save();
-        ctx.font="60px sans-serif";
+        ctx.font=`${fontSize} ${font}`;
         ctx.lineWidth=1;
-        ctx.fillText(text,event.offsetX,event.offsetY);
+        if(fontFillStroke === "fill"){
+            ctx.fillText(text,event.offsetX,event.offsetY);
+        }else{
+            ctx.strokeText(text,event.offsetX,event.offsetY);
+        }
         ctx.restore();
     }
 }
@@ -131,6 +144,15 @@ function onModeCheck(event){
         isAreaFilling=false;
     }
 }
+function onFontMode(event){
+    fontFillStroke = event.target.value;
+}
+function onClose(){
+    if(fontDialog.returnValue === "confirm"){
+        font = fontDialogSelect.value;
+        fontSize = `${fontSizeInput.value}px`;
+    }
+}
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", canclePainting);
@@ -142,8 +164,11 @@ color.addEventListener("change", onColorChange);
 
 colorOptions.forEach(color => color.addEventListener("click", onColorClick));
 modeCheck.forEach(mode => mode.addEventListener("click",onModeCheck));
+fontMode.forEach(mode => mode.addEventListener("click",onFontMode));
 
 clearBtn.addEventListener("click",onClearClick);
 eraserBtn.addEventListener("click",onEraserClick);
 fileInput.addEventListener("change",onFileChange);
 saveBtn.addEventListener("click",onSaveClick);
+fontSettingBtn.addEventListener("click",() => fontDialog.showModal());
+fontDialog.addEventListener("close",onClose);

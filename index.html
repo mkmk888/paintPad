@@ -40,6 +40,34 @@
         <button id="clear-btn">❌ All-Clear</button>
         <button id="eraser-btn">⚪ Eraser</button>
         <input type="text" value="Input Text !!" id="text" />
+        <button id="font-btn">⚙ Font setting</button>
+        <dialog id="font-dialog">
+            <form method="dialog">
+                <div id="dialog">
+                    <label>Font :
+                        <select>
+                            <option value="sans-serif">sans-serif</option>
+                            <option value="Oswald">Oswald</option>
+                            <option value="Roboto Mono">Roboto Mono</option>
+                            <option value="Noto Sans KR">Noto Sans KR</option>
+                            <option value="Gowun Dodum">Gowun Dodum</option>
+                        </select>
+                    </label>
+                    <label>Font Size : 
+                        <input type="text" id="font-size" value="60"/>
+                        px
+                    </label>
+                    <div>
+                        <input type="radio" id="filltext" value="fill" class="font-mode" name="dialogRadio" autocomplete="off" checked/>
+                        <label for="filltext">fill</label>
+                        <input type="radio" id="stroketext" value="stroke" class="font-mode" name="dialogRadio" autocomplete="off" />
+                        <label for="stroketext">stroke</label>
+                    </div>
+                </div>
+                <button class="dialog-btn" value="confirm">Confirm</button>
+            </form>
+        </dialog>
+
         <label for="file">
             Add Photo
             <input type="file" accept="image/*" id="file" />

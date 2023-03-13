@@ -1,4 +1,8 @@
 @import "reset.css";
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
 
 canvas{
     width: 900px;
@@ -82,4 +86,21 @@ label{
 .mode-group{
     padding-bottom: 30px;
     border-bottom: thick double grey;
+}
+#dialog{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+dialog{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    border: 0;
+    text-align: center;
+    border-radius: 20px;
+    padding: 20px 50px 10px 50px;
+}
+.dialog-btn{
+    margin-top: 20px;
+    padding: 10px;
 }
