@@ -1,14 +1,14 @@
 @import "reset.css";
 
 canvas{
-    width: 800px;
-    height: 800px;
+    width: 900px;
+    height: 900px;
     background-color: white;
     border-radius: 10px;
 }
 body{
     display: flex;
-    gap: 20px;
+    gap: 50px;
     justify-content: center;
     align-items: center;
     background-color: gainsboro;
@@ -70,4 +70,10 @@ input#text{
     border-radius: 10px;
     font-weight: 500;
     background-color: white;
+}
+label{
+    text-align: center;
+    padding: 5px;
+    border: 1px solid grey;
+    border-radius: 10px;
 }

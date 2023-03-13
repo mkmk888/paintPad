@@ -1,3 +1,4 @@
+const lineWidthText = document.querySelector("#line-width-text");
 const saveBtn = document.querySelector("#save-btn");
 const textInput = document.querySelector("#text");
 const fileInput = document.querySelector("#file");
@@ -10,8 +11,8 @@ const lineWidth = document.querySelector("#line-width");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d"); /*paint brush*/
 
-const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 800;
+const CANVAS_WIDTH = 900;
+const CANVAS_HEIGHT = 900;
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 ctx.lineWidth = lineWidth.value;
@@ -19,6 +20,7 @@ ctx.lineCap = "round";
 
 let isPainting = false;
 let isFilling = false;
+let isErasing = false;
 
 function onMove(event) {
     if (isPainting) {
@@ -51,6 +53,7 @@ function canclePainting() {
 }
 function onLineWidthChange(event) {
     ctx.lineWidth = event.target.value;
+    lineWidthText.innerText = `Line Width : ${event.target.value}px`;
 }
 function onColorChange(event) {
     changeColor(event);
@@ -63,11 +66,11 @@ function onColorClick(event) {
 function onModeClick(){
     if(isFilling){
         isFilling = false;
-        modeBtn.innerText = "Fill";
+        modeBtn.innerText = "Mode : Draw";
     }
     else{
         isFilling = true;
-        modeBtn.innerText = "Draw";
+        modeBtn.innerText = "Mode : Fill";
     }
 }
 function onClearClick(){
@@ -75,9 +78,27 @@ function onClearClick(){
     ctx.fillRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
 }
 function onEraserClick(){
-    ctx.strokeStyle = "white";
-    isFilling = false;
-    modeBtn.innerText = "Fill";
+    if(isErasing===false){
+        ctx.save();
+        ctx.strokeStyle = "white";
+        isErasing = true;
+        isFilling = false;
+        modeBtn.innerText = "-";
+        eraserBtn.innerText = "Eraser Off";
+    }
+    else{
+        ctx.restore();
+        eraserBtn.innerText = "⚪Eraser";
+        isErasing = false;
+        if(!isFilling){
+            isFilling = false;
+            modeBtn.innerText = "Mode : Draw";
+        }
+        else{
+            isFilling = true;
+            modeBtn.innerText = "Mode : Fill";
+        }
+    }
 }
 function onFileChange(event){
     const file = event.target.files[0];
@@ -93,7 +114,7 @@ function onDoubleClick(event){
     const text = textInput.value;
     if(text !== null){
         ctx.save();
-        ctx.font="60px serif";
+        ctx.font="60px sans-serif";
         ctx.lineWidth=1;
         ctx.fillText(text,event.offsetX,event.offsetY);
         ctx.restore();
